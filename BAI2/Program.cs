@@ -8,66 +8,105 @@ namespace BAI
     {
         public static bool Vooruit(uint b)
         {
-            // *** IMPLEMENTATION HERE *** //
-            return false;
+            return (b & 128u) != 0;
         }
+
         public static uint Vermogen(uint b)
         {
-            // *** IMPLEMENTATION HERE *** //
-            return 0;
+            uint waarde = (b >> 5) & 3u;
+
+            if (waarde == 0)
+            {
+                return 0;
+            }
+            else if (waarde == 1)
+            {
+                return 33;
+            }
+            else if (waarde == 2)
+            {
+                return 67;
+            }
+            else
+            {
+                return 100;
+            }
         }
+
         public static bool Wagon(uint b)
         {
-            // *** IMPLEMENTATION HERE *** //
-            return false;
+            return (b & 16u) != 0;
         }
+
         public static bool Licht(uint b)
         {
-            // *** IMPLEMENTATION HERE *** //
-            return false;
+            return (b & 8u) != 0;
         }
+
         public static uint ID(uint b)
         {
-            // *** IMPLEMENTATION HERE *** //
-            return 0;
+            return b & 7u;
         }
 
         public static HashSet<uint> Alle(List<uint> inputStroom)
         {
             HashSet<uint> set = new HashSet<uint>();
-            // *** IMPLEMENTATION HERE *** //
+            foreach (uint b in inputStroom)
+            {
+                set.Add(b);
+            } 
             return set;
         }
         public static HashSet<uint> ZonderLicht(List<uint> inputStroom)
         {
             HashSet<uint> set = new HashSet<uint>();
-            // *** IMPLEMENTATION HERE *** //
+            foreach (uint b in inputStroom)
+            {
+                if (!Licht(b))
+                {
+                    set.Add(b);
+                }
+            }
             return set;
         }
         public static HashSet<uint> MetWagon(List<uint> inputStroom)
         {
             HashSet<uint> set = new HashSet<uint>();
-            // *** IMPLEMENTATION HERE *** //
+            foreach (uint b in inputStroom)
+            {
+                if (Wagon(b))
+                {
+                    set.Add(b);
+                }
+            }
             return set;
         }
         public static HashSet<uint> SelecteerID(List<uint> inputStroom, uint lower, uint upper)
         {
             HashSet<uint> set = new HashSet<uint>();
-            // *** IMPLEMENTATION HERE *** //
+            foreach (uint b in inputStroom)
+            {
+                uint id = ID(b);
+
+                if (id >= lower && id <= upper)
+                {
+                    set.Add(b);
+                }
+            }
             return set;
         }
 
         public static HashSet<uint> Opdr3a(List<uint> inputStroom)
         {
-            HashSet<uint> set = new HashSet<uint>();
-            // *** IMPLEMENTATION HERE *** //
+            HashSet<uint> set = SelecteerID(inputStroom, 0, 2);
+            set.IntersectWith(ZonderLicht(inputStroom));
             return set;
         }
 
         public static HashSet<uint> Opdr3b(List<uint> inputStroom)
         {
-            HashSet<uint> set = new HashSet<uint>();
-            // *** IMPLEMENTATION HERE *** //
+            HashSet<uint> set = Alle(inputStroom);
+            set.ExceptWith(Opdr3a(inputStroom));
             return set;
         }
 
