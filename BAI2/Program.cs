@@ -8,7 +8,6 @@ namespace BAI
     {
         public static bool Vooruit(uint b)
         {
-            return (b & 128u) != 0;
             // *** IMPLEMENTATION HERE *** //
             return false;
         }
