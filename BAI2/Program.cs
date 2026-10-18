@@ -9,50 +9,37 @@ namespace BAI
         public static bool Vooruit(uint b)
         {
             return (b & 128u) != 0;
+            // *** IMPLEMENTATION HERE *** //
+            return false;
         }
-
         public static uint Vermogen(uint b)
         {
-            uint waarde = (b >> 5) & 3u;
-
-            if (waarde == 0)
-            {
-                return 0;
-            }
-            else if (waarde == 1)
-            {
-                return 33;
-            }
-            else if (waarde == 2)
-            {
-                return 67;
-            }
-            else
-            {
-                return 100;
-            }
+            // *** IMPLEMENTATION HERE *** //
+            return 0;
         }
-
         public static bool Wagon(uint b)
         {
-            return (b & 16u) != 0;
+            // *** IMPLEMENTATION HERE *** //
+            return false;
         }
-
         public static bool Licht(uint b)
         {
-            return (b & 8u) != 0;
+            // *** IMPLEMENTATION HERE *** //
+            return false;
         }
-
         public static uint ID(uint b)
         {
-            return b & 7u;
+            // *** IMPLEMENTATION HERE *** //
+            return 0;
         }
 
         public static HashSet<uint> Alle(List<uint> inputStroom)
         {
             HashSet<uint> set = new HashSet<uint>();
+            // Door alle elementen van de inputlijst lopen
             foreach (uint b in inputStroom)
             {
+                // Elk element toevoegen aan de HashSet
                 set.Add(b);
             } 
             return set;
@@ -60,10 +47,13 @@ namespace BAI
         public static HashSet<uint> ZonderLicht(List<uint> inputStroom)
         {
             HashSet<uint> set = new HashSet<uint>();
+            // Door alle elementen van de inputlijst lopen
             foreach (uint b in inputStroom)
             {
+                // Controleren of het licht uit staat
                 if (!Licht(b))
                 {
+                    // Alleen treinen zonder licht toevoegen
                     set.Add(b);
                 }
             }
@@ -72,10 +62,13 @@ namespace BAI
         public static HashSet<uint> MetWagon(List<uint> inputStroom)
         {
             HashSet<uint> set = new HashSet<uint>();
+            // Door alle elementen van de inputlijst lopen
             foreach (uint b in inputStroom)
             {
+                // Controleren of er een wagon gekoppeld is
                 if (Wagon(b))
                 {
+                    // Alleen treinen met wagon toevoegen
                     set.Add(b);
                 }
             }
@@ -84,10 +77,12 @@ namespace BAI
         public static HashSet<uint> SelecteerID(List<uint> inputStroom, uint lower, uint upper)
         {
             HashSet<uint> set = new HashSet<uint>();
+            // Door alle elementen van de inputlijst lopen
             foreach (uint b in inputStroom)
             {
+                // Het trein-ID uit het element halen
                 uint id = ID(b);
-
+                // Controleren of het ID binnen de grenzen valt
                 if (id >= lower && id <= upper)
                 {
                     set.Add(b);
@@ -98,14 +93,18 @@ namespace BAI
 
         public static HashSet<uint> Opdr3a(List<uint> inputStroom)
         {
-            HashSet<uint> set = SelecteerID(inputStroom, 0, 2);
-            set.IntersectWith(ZonderLicht(inputStroom));
+            HashSet<uint> set = new HashSet<uint>();
+            // *** IMPLEMENTATION HERE *** //
             return set;
         }
 
         public static HashSet<uint> Opdr3b(List<uint> inputStroom)
+        // bruce
         {
             HashSet<uint> set = Alle(inputStroom);
+            // Verwijder alle treinen die in opdracht 3a zitten
+            // 3a bevat: ID lager dan 3 EN zonder licht
+            // Wat overblijft is dus: ID hoger dan 2 OF met licht
             set.ExceptWith(Opdr3a(inputStroom));
             return set;
         }
